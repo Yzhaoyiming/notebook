@@ -1,4 +1,4 @@
-/* exported $write */
+//编辑区
 var $write = (function() {
   var $DOM = $(''
       + '<div class="notepad-write">'
@@ -13,8 +13,6 @@ var $write = (function() {
     wrap: false
   };
 
-  var bSelect = false;
-
   function resize(isBig) {
     if(isBig) {
       $DOM.css({bottom: '21px'});
@@ -25,32 +23,6 @@ var $write = (function() {
 
   function focus() {
     $textArea.focus();
-  }
-
-  $textArea.keyup(function() {
-    lbox.posHandler(getRow(), getCol());
-    lbox.contentHandler($textArea.val() !== '');
-  });
-
-
-  $textArea.mousedown(function() { bSelect = true; });
-
-  $textArea.mouseup(function() { bSelect = false; });
-
-  function getCol() {
-    var sub = $textArea.val().substr(0, $textArea[0].selectionStart);
-    var subs = sub.split('\n');
-
-    return subs[subs.length-1].length + 1;
-  }
-
-  function getRow() {
-    var sub = $textArea.val().substr(0, $textArea[0].selectionStart);
-    return sub.split('\n').length;
-  }
-
-  function getTotalLn() {
-    return $textArea.val().split('\n').length;
   }
 
   function setWrap(bWrap) {
@@ -82,14 +54,6 @@ var $write = (function() {
     }
   }
 
-  function selectAll() {
-    var n = $textArea.val().length;
-
-    $textArea[0].selectionStart = 0;
-    $textArea[0].selectionEnd = n;
-
-    $textArea.select();
-  }
 
   function insertDataTime() {
     var str = $textArea.val();
@@ -101,63 +65,6 @@ var $write = (function() {
 
     $textArea.val(str);
     $textArea.focus();
-    lbox.posHandler(getRow(), getCol());
-  }
-
-  function gotoLn(num) {
-    var str = $textArea.val(),
-        m = 0;
-
-    var aryStr = str.split('\n');
-    for(var i=0; i<num-1; i++) {
-      m += aryStr[i].length + 1;
-    }
-
-    $textArea[0].selectionStart = m;
-    $textArea[0].selectionEnd = m;
-    $textArea.focus();
-    lbox.posHandler(getRow(), getCol());
-  }
-
-  function bingSearch() {
-    var start = $textArea[0].selectionStart,
-        end   = $textArea[0].selectionEnd;
-
-    if(start === end) {
-      window.open('https://cn.bing.com/', '_blank');
-    } else {
-      var subStr = $textArea.val().substring(start, end);
-      window.open('https://cn.bing.com/search?q=' + subStr, '_blank');
-    }
-  }
-
-  function search(srch) {
-    var content  = $textArea.val(),
-        srchCtnt = srch.content;
-
-    if(!srch.capitalSense) { // 不区分大小写，把所有字符串都转换成小写
-      content  = content.toLowerCase();
-      srchCtnt = srchCtnt.toLowerCase();
-    }
-
-    var start = $textArea[0].selectionEnd;
-    var result;
-
-    if(srch.direction === 'down') { // 查找方向，向下
-      result = content.indexOf(srchCtnt, start);
-    } else { // srch.direction === 'up'，查找方向，向上
-      var subStr = content.substr(0, $textArea[0].selectionStart);
-      result = subStr.lastIndexOf(srchCtnt);
-    }
-
-    if(result === -1) {
-      alert('找不到 "' + srch.content + '"');
-      return;
-    }
-
-    $textArea[0].selectionStart = result;
-    $textArea[0].selectionEnd = result + srchCtnt.length;
-
     lbox.posHandler(getRow(), getCol());
   }
 
@@ -173,15 +80,8 @@ var $write = (function() {
     show: show,
     resize: resize,
     focus: focus,
-    getTotalLn: getTotalLn,
-    getRow: getRow,
-    getCol: getCol,
     setWrap: setWrap,
-    selectAll: selectAll,
     insertDataTime: insertDataTime,
-    gotoLn: gotoLn,
-    bingSearch: bingSearch,
-    search: search,
     setFont: setFont
   };
 }());
