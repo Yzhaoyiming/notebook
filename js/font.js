@@ -48,14 +48,21 @@ var $noteFont = (function() {
 
   function sample() {
     $sample.css({ 'font-family': lbox.family, 'font-size': lbox.size + 'pt' });
+    if(lbox.style === '常规') {
+      $sample.css({'font-style': 'normal'});
+      $sample.css({'font-weight': 'normal'});
+      return;
+    }
 
     if(lbox.style === '斜体') {
       $sample.css({'font-style': 'italic'});
+      $sample.css({'font-weight': 'normal'});
       return;
     }
 
     if(lbox.style === '粗体') {
       $sample.css({'font-weight': 'bold'});
+      $sample.css({'font-style': 'normal'});
       return;
     }
 

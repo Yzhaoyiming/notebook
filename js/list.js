@@ -21,13 +21,24 @@ function comList() {
   };
 
   function setFontStyle(item, style) {
+    if(style === '常规') {
+      item.css({'font-style': 'normal'});
+      item.css({'font-weight': 'normal'});
+
+      return;
+    }
     if(style === '斜体') {
       item.css({'font-style': 'italic'});
+      item.css({'font-weight': 'normal'});
+
       return;
     }
 
     if(style === '粗体') {
       item.css({'font-weight': 'bold'});
+      item.css({'font-style': 'normal'});
+
+
       return;
     }
 

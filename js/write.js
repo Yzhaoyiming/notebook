@@ -37,14 +37,20 @@ var $write = (function() {
 
   function setFont(e) {
     $textArea.css({'font-family': e.family, 'font-size': e.size + 'pt'});
-
+    if(e.style === '常规') {
+      $textArea.css({'font-style': 'normal'});
+      $textArea.css({'font-weight': 'normal'});
+      return;
+    }
     if(e.style === '斜体') {
       $textArea.css({'font-style': 'italic'});
+      $textArea.css({'font-weight': 'normal'});
       return;
     }
 
     if(e.style === '粗体') {
       $textArea.css({'font-weight': 'bold'});
+      $textArea.css({'font-style': 'normal'});
       return;
     }
 
